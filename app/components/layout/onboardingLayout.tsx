@@ -3,16 +3,17 @@ import {
     StyleSheet,
     SafeAreaView,
     View,
-    Text
+    Text,
+    ScrollView
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection:'column',
+        flexDirection: 'column',
         alignItems: 'center',
         minHeight: '100%',
-        position: 'relative'
+        position: 'relative',
     },
     linearBackground: {
         alignItems: 'center',
@@ -35,14 +36,18 @@ const OnBoardingLayout = ({
     return (
         <SafeAreaView>
             <View style={styles.container}>
-                <LinearGradient
-                    colors={['#101E4F', '#2A3E83' ]}
-                    style={styles.linearBackground}
-                >
-                    <Text style={styles.label}>Skip</Text>
-                    {children}
-                </LinearGradient>
-            </View>
+
+                    <LinearGradient
+                        colors={['#101E4F', '#2A3E83']}
+                        style={styles.linearBackground}
+                    >
+                        <Text style={styles.label}>Skip</Text>
+                        <ScrollView style={{ width: '100%', maxHeight: '100%' }}>
+                            {children}
+                        </ScrollView>
+                    </LinearGradient>
+
+                </View>
         </SafeAreaView>
     )
 }

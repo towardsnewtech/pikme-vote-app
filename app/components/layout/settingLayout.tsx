@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import AntDesign from "@expo/vector-icons/AntDesign";
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const styles = StyleSheet.create({
     container: {

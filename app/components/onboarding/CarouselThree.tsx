@@ -96,8 +96,9 @@ const CarouselThree = () => {
                 end={{x:0, y:1}}
                 style={styles.linearBackground}
             >
-                <GraduallyAppearingText>Win Huge Prizes</GraduallyAppearingText>
+                <GraduallyAppearingText type="three">Win Huge Prizes</GraduallyAppearingText>
                 <GraduallyAppearingText
+                    type="three"
                     fontSize={18}
                     color={'rgba(255, 255, 255, 0.4)'}
                     fontWeight={'500'}

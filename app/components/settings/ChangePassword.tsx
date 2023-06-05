@@ -3,12 +3,19 @@ import React from 'react'
 import {
     StyleSheet,
     View,
-    Text
+    Text,
+    Image,
+    TouchableOpacity,
 } from 'react-native'
 import { TextInput } from '@react-native-material/core'
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FilledButton from '../../shared/components/FilledButton';
-import { SendPasswordResetEmail } from '../../firebase/auth';
+import { changePassword } from '../../firebase/auth';
+import { showToastWithGravity } from '../../common/toast';
+import { useAppSelector } from '../../store/hooks';
+import _Text from '../../shared/components/_Text';
+import { useDispatch } from 'react-redux';
+import { setSelectedAccount } from '../../store/slices/auth.slice';
 
 const styles = StyleSheet.create({
     container: {
@@ -27,24 +34,55 @@ const styles = StyleSheet.create({
     },
     inputView: {
         alignItems: 'center',
+        position: 'relative',
     },
     input: {
         paddingRight: 5,
         paddingBottom: 10,
         width: '100%',
     },
+    inputComment: {
+        position: 'absolute',
+        top: -10,
+        left: 15,
+        zIndex: 1,
+        paddingLeft: 3,
+        paddingRight: 3
+    }
 })
 
-const ChangePassword = ({navigation}: any) => {
-    const [email, onChangeEmail] = React.useState("")
-    const [loading, setLoading] = React.useState(false)
+const ChangePassword = ({ navigation }: any) => {
+    const [oldPassword, onChangeOldPassword] = React.useState("")
+    const [newUserPassword, onChangeNewPassword] = React.useState("")
+    const [confirmNewPassword, onChangeConfirmNewPassword] = React.useState("")
+    const [oldPasswordVisible, setOldPasswordVisible] = React.useState(true)
+    const [newPasswordVisible, setNewPasswordVisible] = React.useState(true)
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = React.useState(true)
 
-    const handleSend = async () => {
-        setLoading(true)
-        let res = await SendPasswordResetEmail(email)
-        setLoading(false)
+    const dispatch = useDispatch()
+    const { account } = useAppSelector((state) => state.auth)
 
-        navigation.navigate("Setting", { name: "Setting" })
+    const handleChangePassword = async () => {
+        if (newUserPassword != confirmNewPassword) {
+            showToastWithGravity("Wrong Confirm Password")
+            return;
+        }
+
+        let res = await changePassword(oldPassword, newUserPassword, account.password)
+        if (res?.success) {
+            dispatch(setSelectedAccount({
+                firstname: account.firstname,
+                lastname: account.lastname,
+                username: account.username,
+                userEmail: account.userEmail,
+                balance: account.balance,
+                password: newUserPassword
+            }))
+            showToastWithGravity("Password Reset Successfully")
+            navigation.navigate("Setting", { name: "Setting" })
+        } else {
+            showToastWithGravity(res?.message)
+        }
     }
 
     return (
@@ -56,8 +94,14 @@ const ChangePassword = ({navigation}: any) => {
             </View>
             <View style={{
                 ...styles.inputView,
-                paddingTop: 40
+                marginTop: 40
             }}>
+                <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                    <_Text
+                        name='Old password'
+                        color='#999'
+                    />
+                </View>
                 <TextInput
                     inputContainerStyle={{
                         backgroundColor: 'transparent',
@@ -67,19 +111,95 @@ const ChangePassword = ({navigation}: any) => {
                     }}
                     color='white'
                     variant='outlined'
-                    onChangeText={onChangeEmail}
-                    value={email}
+                    onChangeText={onChangeOldPassword}
+                    value={oldPassword}
                     style={styles.input}
-                    placeholder='Enter your email'
+                    placeholder='Old Password'
                     placeholderTextColor={'white'}
+                    secureTextEntry={oldPasswordVisible}
+                    trailing={<TouchableOpacity
+                        onPress={() => { setOldPasswordVisible(!oldPasswordVisible) }}
+                    >
+                        <MaterialCommunityIcons name={!oldPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                    </TouchableOpacity>}
                 />
             </View>
             <View
                 style={{
-                    paddingTop: 50
+                    paddingTop: 30
                 }}
             >
-                <FilledButton disabled={loading} text='send' width={'100%'} onPress={loading ? () => {} : handleSend}/>
+                <View style={{
+                    ...styles.inputView,
+                    marginTop: 40
+                }}>
+                    <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                        <_Text
+                            name='New password'
+                            color='#999'
+                        />
+                    </View>
+                    <TextInput
+                        inputContainerStyle={{
+                            backgroundColor: 'transparent',
+                        }}
+                        inputStyle={{
+                            color: 'white',
+                        }}
+                        color='white'
+                        variant='outlined'
+                        onChangeText={onChangeNewPassword}
+                        value={newUserPassword}
+                        style={styles.input}
+                        placeholder='New Password'
+                        placeholderTextColor={'white'}
+                        secureTextEntry={newPasswordVisible}
+                        trailing={<TouchableOpacity
+                            onPress={() => { setNewPasswordVisible(!newPasswordVisible) }}
+                        >
+                            <MaterialCommunityIcons name={!newPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                        </TouchableOpacity>}
+                    />
+                </View>
+                <View style={{
+                    ...styles.inputView,
+                    marginTop: 15
+                }}>
+                    <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                        <_Text
+                            name='Confirm password'
+                            color='#999'
+                        />
+                    </View>
+                    <TextInput
+                        inputContainerStyle={{
+                            backgroundColor: 'transparent',
+                        }}
+                        inputStyle={{
+                            color: 'white',
+                        }}
+                        color='white'
+                        variant='outlined'
+                        onChangeText={onChangeConfirmNewPassword}
+                        value={confirmNewPassword}
+                        style={styles.input}
+                        placeholder='Confirm Password'
+                        placeholderTextColor={'white'}
+                        secureTextEntry={confirmPasswordVisible}
+                        trailing={<TouchableOpacity
+                            onPress={() => { setConfirmPasswordVisible(!confirmPasswordVisible) }}
+                        >
+                            <MaterialCommunityIcons name={!confirmPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                        </TouchableOpacity>}
+                    />
+                </View>
+            </View>
+            <View
+                style={{
+                    paddingTop: 250
+                }}
+            >
+                <FilledButton text='save' width={'100%'} onPress={handleChangePassword} />
             </View>
         </View>
     )

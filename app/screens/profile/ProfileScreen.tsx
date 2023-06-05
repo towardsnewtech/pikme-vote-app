@@ -7,7 +7,7 @@ import FilledButton from '../../shared/components/FilledButton'
 import OutlinedButton from '../../shared/components/OutlinedButton'
 import SingleCard from '../../components/profile/SingleCard'
 import YellowFilledButton from '../../shared/components/YellowFilledButton'
-import AntDesign from "@expo/vector-icons/AntDesign";
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import FooterLayout from '../../components/layout/footerLayout'
 import { loadUser } from '../../firebase/auth'
 import { useAppSelector } from '../../store/hooks'
@@ -109,10 +109,12 @@ const ProfileScreen = ({navigation} : any) => {
     const { account } = useAppSelector((state) => state.auth)
 
     React.useEffect(() => {
-        setFirstName(account.firstname);
-        setLastName(account.lastname);
-        setUserEmail(account.userEmail);
-        setUserName(account.username);
+        if (account) {
+            setFirstName(account.firstname);
+            setLastName(account.lastname);
+            setUserEmail(account.userEmail);
+            setUserName(account.username);
+        }
     }, [account])
 
     return (
@@ -154,8 +156,8 @@ const ProfileScreen = ({navigation} : any) => {
                         showLink
                     />
                     <View style={styles.buttonGroup}>
-                        <FilledButton text={'Deposit'} onPress={() => {navigation.navigate('Payment', {name: 'Payment'})}} width='45%'/>
-                        <OutlinedButton text={'Withdraw'} onPress={() => {navigation.navigate('Payment', {name: 'Payment'})}} width='45%' />
+                        <FilledButton text={'Deposit'} onPress={() => {navigation.navigate('Deposit', {name: 'Deposit'})}} width='45%'/>
+                        <OutlinedButton text={'Withdraw'} onPress={() => {navigation.navigate('Withdraw', {name: 'Withdraw'})}} width='45%' />
                     </View>
 
                     <SingleCard

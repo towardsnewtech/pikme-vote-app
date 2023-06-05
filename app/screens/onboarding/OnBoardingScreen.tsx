@@ -14,14 +14,14 @@ import {
 } from 'react-native'
 
 import FilledButton from '../../shared/components/FilledButton'
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 const styles = StyleSheet.create({
     descView: {
         paddingTop: 20,
         paddingBottom: 20,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     descText: {
         color: 'white'
@@ -39,6 +39,13 @@ const OnBoardingScreen = ({navigation}: any) => {
         setStep(step)
     }
 
+    const handleNext = () => {
+        if (step == 2) {
+            navigation.navigate('Interest', { name: "Interest" })
+        }
+        handleStep(step+1)
+    }
+
     return (
         <OnBoardingLayout>
             { step == 0 && <CarouselOne 
@@ -52,14 +59,12 @@ const OnBoardingScreen = ({navigation}: any) => {
             {
                 step == 2 && <CarouselThree />
             }
-            {/* 
-            <CarouselThree /> */}
-            <FilledButton text={'Next'} onPress={() => handleStep(step+1)}/>
+            <FilledButton text={'Next'} onPress={handleNext}/>
             <View style={styles.descView}>
                 <Text style={styles.descText}>
                     Already have an account? &nbsp;
                 </Text>
-                <TouchableOpacity onPress={() => {navigation.navigate('Login', { name: "Login" })}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('Interest', { name: "Interest" })}}>
                         <Text style={styles.linkText}>Log in</Text>
                     </TouchableOpacity> 
             </View>

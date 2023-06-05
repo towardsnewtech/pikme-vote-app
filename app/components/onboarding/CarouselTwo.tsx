@@ -60,17 +60,37 @@ const styles = StyleSheet.create({
 const CarouselTwo = () => {
     const translateY = React.useRef(new Animated.Value(100)).current;
     const scale = React.useRef(new Animated.Value(0.1)).current;
+    const opacity = React.useRef(new Animated.Value(0)).current;
+    const translateX = React.useRef(new Animated.Value(-200)).current;
 
     React.useEffect(() => {
+        Animated.parallel([
+            Animated.timing(translateX, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true
+            })
+        ]).start();
+
+        Animated.parallel([
+            Animated.timing(opacity, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true,
+            })
+        ]).start();
+
         Animated.parallel([
             Animated.timing(translateY, {
               toValue: 0, // Adjust this value to control the zoom out effect
               duration: 1000, // Adjust this value to control the animation duration
+              delay: 1000,
               useNativeDriver: true,
             }),
             Animated.timing(scale, {
               toValue: 1, // Adjust this value to control the zoom out scale
               duration: 1000, // Adjust this value to control the animation duration
+              delay: 1000,
               useNativeDriver: true,
             }),
           ]).start();
@@ -80,9 +100,11 @@ const CarouselTwo = () => {
         <View
             style={styles.container}
         >
-            <Image 
+            <Animated.Image 
                 source={contestImage} 
-                style={styles.contestImage}
+                style={{ ...styles.contestImage,
+                    opacity: opacity
+                }}
             />
             <View 
                 style={styles.overView}
@@ -99,23 +121,26 @@ const CarouselTwo = () => {
                     style={styles.overImage}
                 /> */}
             </View>
-            <LinearGradient 
-                colors={['transparent', '#2A3E83']}
-                start={{x: 0 , y: 0}}
-                end={{x:0, y:1}}
-                style={styles.linearBackground}
-            >
-                <GraduallyAppearingText>
-                    Join the Contests with Huge Pool
-                </GraduallyAppearingText>
-                <GraduallyAppearingText
-                    fontSize={18}
-                    color={'rgba(255, 255, 255, 0.4)'}
-                    fontWeight={'500'}
+            <Animated.View style={{ transform: [ {translateX: translateX} ] }}>
+                <LinearGradient 
+                    colors={['transparent', '#2A3E83']}
+                    start={{x: 0 , y: 0}}
+                    end={{x:0, y:1}}
+                    style={styles.linearBackground}
                 >
-                    Share your photos or buy something awesome.
-                </GraduallyAppearingText>
-            </LinearGradient>
+                    <GraduallyAppearingText type="two">
+                        Join the Contests with Huge Pool
+                    </GraduallyAppearingText>
+                    <GraduallyAppearingText
+                        type="two"
+                        fontSize={18}
+                        color={'rgba(255, 255, 255, 0.4)'}
+                        fontWeight={'500'}
+                    >
+                        Share your photos or buy something awesome.
+                    </GraduallyAppearingText>
+                </LinearGradient>
+            </Animated.View>
         </View>
     )
 }

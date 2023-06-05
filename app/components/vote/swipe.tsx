@@ -2,11 +2,9 @@ import React from 'react'
 
 import { SafeAreaView, ScrollView, StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 
-import AntDesign from '@expo/vector-icons/AntDesign'
+// import FooterLayout from '../../components/layout/footerLayout'
 
-import FooterLayout from '../../components/layout/footerLayout'
-
-import LinearGradient from 'react-native-linear-gradient'
+// import LinearGradient from 'react-native-linear-gradient'
 import SwipeImage from '../../shared/ui/SwipeImage'
 import DisappearingImage from '../../shared/ui/DisappearingImage'
 
@@ -63,13 +61,16 @@ const styles = StyleSheet.create({
 })
 
 const Swipe = () => {
-    const [curIndex, setCurIndex] = React.useState(0)
-    const topImg = [top1Img, top2Img, top3Img]
-    const bottomImg = [bottom1Img, bottom2Img, bottom3Img]
+    // const [curIndex, setCurIndex] = React.useState(0)
+    // const topImg = [top1Img, top2Img, top3Img]
+    // const bottomImg = [bottom1Img, bottom2Img, bottom3Img]
     const [selected, setSelected] = React.useState(false)
-    const [animationEnded, setAnimationEnded] =React.useState(false)
+    const [animationEnded, setAnimationEnded] = React.useState(false)
+    const [disappearImg, setDisappearImg] = React.useState(null);
 
-    const handleSelect = () => {
+    const handleSelect = (img: any) => {
+        if (img == top1Img) setDisappearImg(bottom1Img)
+        if (img == bottom1Img) setDisappearImg(top1Img)
         setSelected(true)
     }
 
@@ -78,25 +79,41 @@ const Swipe = () => {
     }
 
     return (
-            <View style={styles.container}>
-                <View style={styles.starView}>
-                    <View style={styles.starIconView}>
-                        <Image source={starImage} />
-                        <Text style={styles.starValueText}>460</Text>
-                    </View>
+        <ScrollView>
+        <View style={styles.container}>
+            <View style={styles.starView}>
+                <View style={styles.starIconView}>
+                    <Image source={starImage} />
+                    <Text style={styles.starValueText}>460</Text>
                 </View>
-                <View>
-                    {
-                        !animationEnded ? <SwipeImage 
-                            imagePath={top1Img}
-                            handleSelect={handleSelect}
-                            handleAnimationEnded={handleAnimationEnded}
-                        /> : <Image source={top1Img} style={{
-                            marginTop: 100
-                        }}/>
-                    }
-                </View>
-                {/* <View style={styles.swipeRow}>
+            </View>
+
+            { selected && disappearImg == top1Img && <DisappearingImage imagePath={disappearImg} /> }
+
+            { (disappearImg == bottom1Img || disappearImg == null) && ( !animationEnded ? <SwipeImage
+                isTopSelected={true}
+                imagePath={top1Img}
+                top1Img={top1Img}
+                handleSelect={handleSelect}
+                handleAnimationEnded={handleAnimationEnded}
+            /> : <Image source={top1Img} style={{
+                marginTop: 100
+            }} />)}
+
+            { (disappearImg == top1Img || disappearImg == null) &&
+            ( !animationEnded ? <SwipeImage
+                isTopSelected={false}
+                imagePath={bottom1Img}
+                top1Img={top1Img}
+                handleSelect={handleSelect}
+                handleAnimationEnded={handleAnimationEnded}
+            /> : <Image source={bottom1Img} style={{
+                marginTop: -150
+            }} />) }
+
+            { selected && disappearImg == bottom1Img && <DisappearingImage imagePath={disappearImg} /> }
+
+            {/* <View style={styles.swipeRow}>
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -121,13 +138,8 @@ const Swipe = () => {
                         </LinearGradient>
                     </LinearGradient>
                 </View> */}
-                <View>
-                    {selected ? <DisappearingImage 
-                        imagePath={bottom1Img}
-                    /> :
-                    <Image source={bottom1Img} />}
-                </View>
-            </View>
+        </View>
+        </ScrollView>
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Image, PanResponder, Animated } from 'react-native';
 
-const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded}: any) => {
+const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded, top1Img}: any) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const [originX, setOriginX] = useState(0);
 
@@ -15,22 +15,23 @@ const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded}: any) => {
       { useNativeDriver: false }
     ),
     onPanResponderRelease: (e, gesture) => {
-      handleSelect(true)
-      setTimeout(() => {
-        handleAnimationEnded()
-      }, 1000)
-      
-      if (gesture.dx > 150) {
+      if (gesture.dx > 250) {
         // Perform animation when dragged to the right
         Animated.timing(pan, {
-          toValue: { x: 0, y: 100 },
+          toValue: { x: 0, y: imagePath == top1Img ? 100 : -150 },
           duration: 1000,
           useNativeDriver: false
         }).start();
+
+        setTimeout(() => {
+          handleAnimationEnded()
+        }, 1000)
+
+        handleSelect(imagePath)
       } else {
         // Reset to the original position
         Animated.spring(pan, {
-          toValue: { x: originX, y: 0 },
+          toValue: { x: 0, y: 0 },
           useNativeDriver: false
         }).start();
       }

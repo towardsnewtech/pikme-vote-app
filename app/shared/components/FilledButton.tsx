@@ -57,7 +57,7 @@ const FilledButton = ({
     bgColor,
     disabled
 }: IFilledButton) => {
-    const disableMode = ['gray', 'gray']
+    const disableMode = ['#2a3a54', '#1e3453']
 
     return (
         <LinearGradient

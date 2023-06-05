@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 const dollor_left = require('../../assets/images/global/dollar-left.png')
 const dollor_right = require('../../assets/images/global/dollar-right.png')
 
-const _ContestCard = ({btnText}: {btnText: string}) => {
+const _ContestCard = ({btnText, navigation, setCurBtn, type}: any) => {
 
     return (
         <View style={styles.mainCard}>
@@ -60,6 +60,7 @@ const _ContestCard = ({btnText}: {btnText: string}) => {
                     txtColor='black'
                     ftsize={14}
                     ftweight='800'
+                    onPress={() => { if (type == 1) {setCurBtn('All Contests')}; navigation.navigate('Contest', { name: "Contest" })} }
                 />
             </View>
             <Image
@@ -83,7 +84,8 @@ const _ContestCard = ({btnText}: {btnText: string}) => {
 }
 
 _ContestCard.defaultProps = {
-    btnText: 'Claim free contest'
+    btnText: 'Claim free contest',
+    type: 0
 }
 
 export default _ContestCard

@@ -1,11 +1,4 @@
 {
-  "expo": {
-    "name": "PickMe",
-    "slug": "PickMe",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  },
-  "name": "PickMe"
+  "name": "PickMeTest",
+  "displayName": "PickMeTest"
 }

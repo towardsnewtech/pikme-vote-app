@@ -3,7 +3,7 @@ import { View } from 'react-native'
 
 import _ContestCard from '../../shared/components/_ContestCard'
 
-const Participated = () => {
+const Participated = ({navigation, setCurBtn}: any) => {
 
     return (
         <View
@@ -13,7 +13,7 @@ const Participated = () => {
                 alignItems: 'center'
             }}
         >
-            <_ContestCard />
+            <_ContestCard navigation={navigation} setCurBtn={setCurBtn} type={1} />
         </View>
     )
 }

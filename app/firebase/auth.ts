@@ -1,7 +1,10 @@
-import { app, auth, db } from './config'
+import { app, auth, db, storage } from './config'
 
+import { ref, uploadBytesResumable } from 'firebase/storage'
 import { setDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, sendPasswordResetEmail, updateCurrentUser, getAuth, onAuthStateChanged } from 'firebase/auth'
+import { 
+    createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, sendPasswordResetEmail, getAuth, onAuthStateChanged, updatePassword
+} from 'firebase/auth'
 
 import { setSelectedAccount } from '../store/slices/auth.slice' ;
 import { useAppDispatch } from '../store/hooks' ;
@@ -18,7 +21,8 @@ export const SignUpUser = async (userEmail: string, userPassword: string) => {
             userEmail,
             firstname: '',
             lastname: '',
-            username: ''
+            username: '',
+            balance: 0
         })
 
         return { success: true }
@@ -37,7 +41,7 @@ export const SignInUser = async (userEmail: string, userPassword: string) => {
 
         let userProfile = await getDoc(doc(db, "Users", credential.user.uid))
 
-        return { success: true, userProfile: userProfile.data() };
+        return { success: true, userProfile: userProfile.data(), password: userPassword };
         
     } catch (err) {
         if(err) {
@@ -97,13 +101,39 @@ export const loadUser = async () => {
                 let docSnap = await getDoc(doc(db, "Users", user.uid))
                 let userInfo = await docSnap.data()
                 dispatch(setSelectedAccount(userInfo))
-
-                // return userInfo
             }
         })
     } catch (error) {
         console.log(error);
         return false;
+    }
+}
+
+export const changePassword = async (oldpassword: string, newpassword: string, password: string) => {
+    const auth = getAuth();
+    if (password != oldpassword) {
+        return {success: false, message: 'Wrong Old Password'}
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user)
+            updatePassword(user, newpassword)
+    })
+
+    return {success: true}
+}
+
+export const uploadImage = async (uri: any) => {
+    try {
+        const response = await fetch(uri) ;
+        const blob = await response.blob();
+        const filename = uri.substring(uri.lastIndexOf('/') + 1)
+        var storageRef = ref(storage, 'images/' + filename) ;
+        const uploadTask = await uploadBytesResumable(storageRef, blob) ;
+
+        return true;
+    } catch (error) {
+        console.log(error) ;
     }
 }
 

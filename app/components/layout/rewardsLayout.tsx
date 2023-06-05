@@ -1,4 +1,3 @@
-import { Icon } from '@rneui/themed'
 import React from 'react'
 import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'

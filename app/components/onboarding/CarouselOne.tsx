@@ -9,8 +9,6 @@ import {
     PanResponder
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
-import { CardSwiper } from "react-card-rotate-swiper";
-import { InnerScreen } from 'react-native-screens';
 import DisappearingText from '../../shared/ui/DisappearingText';
 
 const phoneImage = require("../../assets/images/onboarding/phone.png");

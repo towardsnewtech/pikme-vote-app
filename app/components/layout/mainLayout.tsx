@@ -4,27 +4,30 @@ import {
     SafeAreaView,
     View,
     Image,
-    ImageBackground
+    ImageBackground,
+    useWindowDimensions
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import {BlurView} from '@react-native-community/blur';
+// import {BlurView} from '@react-native-community/blur';
 
 const catImage = require("../../assets/images/auth/cat.png");
+const catBlurImage = require("../../assets/images/auth/catblurimg.png");
 
 const styles = StyleSheet.create({
     container: {
         flexDirection:'column',
-        alignItems: 'center',
-        minHeight: '100%',
-        position: 'relative'
+        alignItems: 'center'
     },
     linearBackground: {
         alignItems: 'center',
-        height: '100%',
+        position: 'relative',
         width: '100%',
+        height: '100%'
     },
     catImage: {
-        marginTop: 150
+        position: 'absolute',
+        top: 0,
+        left: 0
     },
     blurBackground: {
         top: 0,
@@ -38,6 +41,7 @@ const styles = StyleSheet.create({
 const MainLayout = ({
     children
 }: any) => {
+    const { width, height } = useWindowDimensions()
 
     return (
         <SafeAreaView>
@@ -49,16 +53,8 @@ const MainLayout = ({
                     style={styles.linearBackground}
                 >
                     <Image 
-                        source={catImage} 
+                        source={catBlurImage} 
                         style={styles.catImage}
-                    />
-                   <BlurView
-                        blurType="light"
-                        blurAmount={20}
-                        blurRadius={2}
-                        downsampleFactor={10}
-                        style={styles.blurBackground}
-                        overlayColor={'rgba(0, 0, 0, .1)'}
                     />
                     {children}
                 </LinearGradient>

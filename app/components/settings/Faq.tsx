@@ -13,9 +13,6 @@ import {
 //import for the animation of Collapse and Expand
 import * as Animatable from 'react-native-animatable';
 
-//import for the collapsible/Expandable view
-import Collapsible from 'react-native-collapsible';
-
 //import for the Accordion view
 import Accordion from 'react-native-collapsible/Accordion';
 import SettingLayout from '../layout/settingLayout';

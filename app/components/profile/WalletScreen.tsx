@@ -7,7 +7,7 @@ import FilledButton from '../../shared/components/FilledButton'
 import OutlinedButton from '../../shared/components/OutlinedButton'
 import LinearGradient from 'react-native-linear-gradient'
 
-import AntDesign from '@expo/vector-icons/AntDesign'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const avatar1Image = require("../../assets/images/profile/avatar1.png")
 const avatar0Image = require("../../assets/images/profile/avatar0.png")
@@ -149,8 +149,8 @@ const WalletScreen = ({ navigation }: any) => {
                         <WalletCard />
 
                         <View style={styles.buttonGroup}>
-                            <FilledButton text={'Deposit'} onPress={() => {navigation.navigate('Payment', {name: 'Payment'})}} width='45%'/>
-                            <OutlinedButton text={'Withdraw'} onPress={() => {navigation.navigate('Payment', {name: 'Payment'})}} width='45%' />
+                            <FilledButton text={'Deposit'} onPress={() => {navigation.navigate('Deposit', {name: 'Deposit'})}} width='45%'/>
+                            <OutlinedButton text={'Withdraw'} onPress={() => {navigation.navigate('Withdraw', {name: 'Withdraw'})}} width='45%' />
                         </View>
                     </View>
                     <LinearGradient

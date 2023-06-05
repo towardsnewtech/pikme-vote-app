@@ -8,7 +8,7 @@ import {
 
 const libon = require('../../assets/images/contest/libon.png')
 const libon_ = require('../../assets/images/contest/libonbottom.png')
-import { AntDesign } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import _Text from '../../shared/components/_Text';
 
 const styles = StyleSheet.create({

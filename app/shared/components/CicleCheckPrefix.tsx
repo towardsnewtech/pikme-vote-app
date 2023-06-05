@@ -1,5 +1,5 @@
 import React from 'react'
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {
     StyleSheet,
     View
@@ -13,13 +13,23 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         alignItems: 'center',
-        justifyContent: 'center'    }
+        justifyContent: 'center'    
+    },
+    disableBorder: {
+        borderWidth: 1,
+        borderColor: '#777',
+        borderRadius: 20,
+        width: 20,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center'    
+    }
 })
 
-const CircleCheckPrefix = () => {
+const CircleCheckPrefix = ({disable}: any) => {
     return (
-        <View style={styles.circleBorder}>
-            <MaterialCommunityIcons name='check' size={15} color={'#1677CF'}/>
+        <View style={disable ? styles.disableBorder : styles.circleBorder}>
+            <MaterialCommunityIcons name='check' size={15} color={disable ? '#777': '#1677CF'}/>
         </View>
     )
 }

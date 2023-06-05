@@ -3,6 +3,7 @@ import {
     Image,
     ScrollView,
     StyleSheet,
+    TouchableOpacity,
     View
 } from 'react-native'
 
@@ -116,7 +117,9 @@ const AllContests = ({navigation}: any) => {
                 <ScrollView horizontal={true} style={{ maxHeight: 205 }}>
                     {
                         categoryList.map((category, index) => (
-                            <CategoryItem info={category} key={index} />
+                            <TouchableOpacity key={index} onPress={() => navigation.navigate("Category", {name: "Category"})}>
+                                <CategoryItem info={category} />
+                            </TouchableOpacity>
                         ))
                     }
                 </ScrollView>

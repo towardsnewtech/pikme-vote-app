@@ -13,10 +13,11 @@ import { TextInput } from '@react-native-material/core'
 import FooterLayout from '../layout/footerLayout'
 import FilledButton from '../../shared/components/FilledButton'
 import OutlinedButton from '../../shared/components/OutlinedButton'
-import { loadUser, updateUser } from '../../firebase/auth'
+import { updateUser } from '../../firebase/auth'
 import { useAppSelector } from '../../store/hooks'
 import { useDispatch } from 'react-redux'
 import { setSelectedAccount } from '../../store/slices/auth.slice'
+import _Text from '../../shared/components/_Text'
 
 const avatarImage = require('../../assets/images/profile/avatar.png')
 const editImage = require('../../assets/images/profile/edit.png')
@@ -42,16 +43,24 @@ const styles = StyleSheet.create({
         bottom: -30
     },
     inputView: {
-        paddingBottom: 20
+        paddingBottom: 20,
+        position: 'relative'
     },
     input: {
-
     },
     buttonGroup: {
         paddingTop: 60,
         flexDirection: 'row',
         gap: 20,
         justifyContent: 'center'
+    },
+    inputComment: {
+        position: 'absolute',
+        top: -10,
+        left: 15,
+        zIndex: 1,
+        paddingLeft: 3,
+        paddingRight: 3
     }
 })
 
@@ -63,7 +72,6 @@ const EditProfile = ({ navigation }: any) => {
     const [loading, setLoading] = React.useState(false);
 
     const dispatch = useDispatch()
-
     const { account } = useAppSelector((state) => state.auth)
 
     const handleUpdate = async () => {
@@ -72,7 +80,9 @@ const EditProfile = ({ navigation }: any) => {
             firstname: userFirstName,
             lastname: userLastName,
             username: userName,
-            userEmail: userEmail
+            userEmail: userEmail,
+            balance: account.balance,
+            password: account.password
         }))
         let res = await updateUser({ userFirstName, userLastName, userName, userEmail });
         setLoading(false)
@@ -101,7 +111,13 @@ const EditProfile = ({ navigation }: any) => {
                             <Image source={editImage} />
                         </View>
                     </View>
-                    <View style={[styles.inputView, { paddingTop: 30 }]}>
+                    <View style={[styles.inputView, { marginTop: 30 }]}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='First Name'
+                                color='#999'
+                            />
+                        </View>
                         <TextInput
                             inputContainerStyle={{
                                 backgroundColor: 'transparent',
@@ -119,6 +135,12 @@ const EditProfile = ({ navigation }: any) => {
                         />
                     </View>
                     <View style={styles.inputView}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='Last Name'
+                                color='#999'
+                            />
+                        </View>
                         <TextInput
                             inputContainerStyle={{
                                 backgroundColor: 'transparent',
@@ -136,6 +158,12 @@ const EditProfile = ({ navigation }: any) => {
                         />
                     </View>
                     <View style={styles.inputView}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='Username'
+                                color='#999'
+                            />
+                        </View>
                         <TextInput
                             inputContainerStyle={{
                                 backgroundColor: 'transparent',
@@ -153,6 +181,12 @@ const EditProfile = ({ navigation }: any) => {
                         />
                     </View>
                     <View style={styles.inputView}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='Email Address'
+                                color='#999'
+                            />
+                        </View>
                         <TextInput
                             inputContainerStyle={{
                                 backgroundColor: 'transparent',
@@ -172,7 +206,7 @@ const EditProfile = ({ navigation }: any) => {
 
                     <View style={styles.buttonGroup}>
                         <OutlinedButton text={'Cancel'} onPress={() => { navigation.navigate('Profile', { name: 'Profile' }) }} width='45%' />
-                        <FilledButton disabled={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == "" } text={'Save'} onPress={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == "" ? () => {} : handleUpdate} width='45%' />
+                        <FilledButton disabled={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == ""} text={'Save'} onPress={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == "" ? () => { } : handleUpdate} width='45%' />
                     </View>
                 </View>
             </ScrollView>

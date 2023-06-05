@@ -2,9 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 
 import authReducer from './slices/auth.slice'
+import imageReducer from './slices/image.slice'
+import voteReducer from './slices/vote.slice'
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  image: imageReducer,
+  vote: voteReducer
 })
 
 export const store = configureStore({

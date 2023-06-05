@@ -43,7 +43,18 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+
+        position: 'relative'
+    },
+    selTop: {
+        position: 'absolute', 
+        width: 40, 
+        height: 5, 
+        backgroundColor: '#7faaff', 
+        top: -10,
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10
     },
     iconView: {
         alignItems: 'center',
@@ -51,6 +62,10 @@ const styles = StyleSheet.create({
     },
     iconText: {
         color: 'white',
+        fontSize: 15
+    },
+    iconSelText: {
+        color: '#7faaff',
         fontSize: 15
     }
 })
@@ -74,8 +89,9 @@ const FooterLayout = ({ activeIndex, navigation }: any) => {
                         onPress={() => { navigation.navigate('Vote', { name: 'Vote' }) }}
                     >
                         <View style={styles.iconView}>
+                            { activeIndex == 0 &&  <View style={styles.selTop} /> }
                             <Image source={activeIndex == 0 ? voteActiveImage : voteImage} />
-                            <Text style={styles.iconText}>
+                            <Text style={activeIndex == 0 ? styles.iconSelText: styles.iconText}>
                                 Vote
                             </Text>
                         </View>
@@ -84,8 +100,9 @@ const FooterLayout = ({ activeIndex, navigation }: any) => {
                         onPress={() => { navigation.navigate('Contest', { name: 'Contest' }) }}
                     >
                         <View style={styles.iconView}>
+                            { activeIndex == 1 && <View style={styles.selTop} /> }
                             <Image source={activeIndex == 1 ? contestActiveImage : contestImage } />
-                            <Text style={styles.iconText}>
+                            <Text style={activeIndex == 1 ? styles.iconSelText: styles.iconText}>
                                 Contest
                             </Text>
                         </View>
@@ -94,8 +111,9 @@ const FooterLayout = ({ activeIndex, navigation }: any) => {
                         onPress={() => { navigation.navigate('Rewards', { name: 'Rewards' }) }}
                     >
                         <View style={styles.iconView}>
+                            { activeIndex == 2 && <View style={styles.selTop} /> }
                             <Image source={activeIndex == 2 ? rewardsActiveImage : rewardsImage} />
-                            <Text style={styles.iconText}>
+                            <Text style={activeIndex == 2 ? styles.iconSelText: styles.iconText}>
                                 Rewards
                             </Text>
                         </View>
@@ -104,8 +122,9 @@ const FooterLayout = ({ activeIndex, navigation }: any) => {
                         onPress={() => { navigation.navigate('Statistics', { name: 'Statistics' }) }}
                     >
                         <View style={styles.iconView}>
+                            { activeIndex == 3 && <View style={styles.selTop} /> }
                             <Image source={activeIndex == 3 ? statisticsActiveImage : statisticsImage} />
-                            <Text style={styles.iconText}>
+                            <Text style={activeIndex == 3 ? styles.iconSelText: styles.iconText}>
                                 Statistics
                             </Text>
                         </View>
@@ -114,8 +133,9 @@ const FooterLayout = ({ activeIndex, navigation }: any) => {
                         onPress={() => { navigation.navigate('Profile', { name: 'Profile' }) }}
                     >
                         <View style={styles.iconView}>
+                            { activeIndex == 4 && <View style={styles.selTop} /> }
                             <Image source={activeIndex == 4 ? profileActiveImage : profileImage} />
-                            <Text style={styles.iconText}>
+                            <Text style={activeIndex == 4 ? styles.iconSelText: styles.iconText}>
                                 Profile
                             </Text>
                         </View>

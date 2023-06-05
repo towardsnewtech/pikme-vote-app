@@ -9,7 +9,8 @@ import OnBoardingScreen from '../screens/onboarding/OnBoardingScreen';
 import SettingScreen from '../screens/settings/SettingScreen';
 import ChangePassword from '../components/settings/ChangePassword';
 import Faq from '../components/settings/Faq';
-import PaymentScreen from '../screens/payment/PaymentScreen';
+import DepositScreen from '../screens/deposit/DepositScreen';
+import WithdrawScreen from '../screens/withdraw/WithdrawScreen';
 import ContestScreen from '../screens/contest/contestScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import WalletScreen from '../components/profile/WalletScreen';
@@ -19,7 +20,12 @@ import StatisticsScreen from '../screens/statistics/StatisticsScreen';
 import RewardsScreen from '../screens/rewards/RewardsScreen';
 import Lost from '../components/vote/Lost';
 import Won from '../components/vote/Won';
-import PaymentTest from '../screens/payment';
+import Interest from '../screens/auth/Interest';
+import CategoryScreen from '../screens/contparti/CategoryScreen';
+import UploadPhotoScreen from '../screens/contparti/UploadPhotoScreen';
+import PayConfirmation from '../components/contparti/PayConfirmation';
+import ContestConfirmScreen from '../screens/contparti/ContestConfirmScreen';
+import ContestResultScreen from '../screens/contparti/ContestResultScreen';
 
 const RootStack = createNativeStackNavigator();
 
@@ -27,12 +33,16 @@ const RootNavigator = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={'PaymentTest'}
+        initialRouteName={'OnBoarding'}
       >
         <RootStack.Group
           screenOptions={{ headerShown: false }}
         >
-          <RootStack.Screen name="PaymentTest" component={PaymentTest} />
+          <RootStack.Screen name="Category" component={CategoryScreen} />
+          <RootStack.Screen name="UploadPhoto" component={UploadPhotoScreen} />
+          <RootStack.Screen name="PayConfirmation" component={PayConfirmation} />
+          <RootStack.Screen name='ContestConfirm' component={ContestConfirmScreen} />
+          <RootStack.Screen name='ContestResult' component={ContestResultScreen} />
         </RootStack.Group>
         <RootStack.Group
           screenOptions={{ headerShown: false }}
@@ -52,7 +62,8 @@ const RootNavigator = () => {
         <RootStack.Group
           screenOptions={{ headerShown: false }}
         >
-          <RootStack.Screen name="Payment" component={PaymentScreen} />
+          <RootStack.Screen name="Deposit" component={DepositScreen} />
+          <RootStack.Screen name="Withdraw" component={WithdrawScreen} />
         </RootStack.Group>
         <RootStack.Group
           screenOptions={{ headerShown: false }}
@@ -62,6 +73,7 @@ const RootNavigator = () => {
         <RootStack.Group
           screenOptions={{ headerShown: false }}
         >
+          <RootStack.Screen name='Interest' component={Interest} />
           <RootStack.Screen name="Login" component={LoginScreen} />
           <RootStack.Screen name="Forgot" component={ForgotScreen} />
           <RootStack.Screen name="SignUp" component={SingUpScreen} />

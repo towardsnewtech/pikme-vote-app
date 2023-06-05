@@ -49,8 +49,8 @@ const StatisticsScreen = ({navigation}: any) => {
                 ))
             }
             </View>
-            { curBtn == 'Votes' && <Votes /> }
-            { curBtn == 'Contests' && <Contests /> }
+            { curBtn == 'Votes' && <Votes navigation={navigation} /> }
+            { curBtn == 'Contests' && <Contests navigation={navigation} /> }
             <FooterLayout activeIndex={3} navigation={navigation} />
         </ContestLayout>
     )

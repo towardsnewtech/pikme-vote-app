@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native' ;
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 import _Text from '../../shared/components/_Text';
 import _Favourite from '../../shared/components/_Favourite';
@@ -15,6 +15,7 @@ const person3 = require('../../assets/images/rewards/person3.png')
 const styles = StyleSheet.create({
     container: {
         marginTop: 50,
+        marginBottom: 100,
         paddingLeft: 10,
         paddingRight: 10,
         width: '100%'
@@ -58,21 +59,23 @@ const Rewards = () => {
         }
     ]
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <_Text
-                    name='Rewards for you'
-                />
-                <_Favourite
-                    amount={145460}
-                />
+        <ScrollView style={{ width: '100%' }}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <_Text
+                        name='Rewards for you'
+                    />
+                    <_Favourite
+                        amount={145460}
+                    />
+                </View>
+                {
+                    cardList.map((card, index) => (
+                        <Card info={card} key={index} />
+                    ))
+                }
             </View>
-            {
-                cardList.map((card, index) => (
-                    <Card info={card} key={index} />
-                ))
-            }
-        </View>
+        </ScrollView>
     )
 }
 

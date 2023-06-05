@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const Votes = () => {
+const Votes = ({navigation}: any) => {
 
     const footerList = [
         {
@@ -101,11 +101,11 @@ const Votes = () => {
                     }
                 </View>
             </View>
-            <View
+            {/* <View
                 style={styles.cardContainer}
             >
-                <_ContestCard />
-            </View>
+                <_ContestCard navigation={navigation} />
+            </View> */}
         </>
     )
 }

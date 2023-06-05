@@ -1,6 +1,4 @@
 import React from 'react'
-
-import SwiperFlatList from 'react-native-swiper-flatlist'
 import FooterLayout from '../../components/layout/footerLayout'
 import Swipe from '../../components/vote/swipe'
 import Bonus from '../../components/vote/bonus'

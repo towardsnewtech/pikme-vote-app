@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { StyleSheet, Text, View } from 'react-native'
 import RewardsLayout from '../../components/layout/rewardsLayout'
 import Rewards from '../../components/rewards'
 import FooterLayout from '../../components/layout/footerLayout'
