@@ -20,7 +20,7 @@ const transactionImage = require("../../assets/images/profile/transaction.png")
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        minHeight: '100%',
+        height: '100%',
         backgroundColor: '#1b202f',
         paddingTop: 80,
         paddingLeft: '5%',
@@ -105,6 +105,7 @@ const ProfileScreen = ({navigation} : any) => {
     const [userLastName, setLastName] = React.useState('')
     const [userName, setUserName] = React.useState('')
     const [userEmail, setUserEmail] = React.useState('')
+    const [balance, setBalance] = React.useState();
 
     const { account } = useAppSelector((state) => state.auth)
 
@@ -114,11 +115,12 @@ const ProfileScreen = ({navigation} : any) => {
             setLastName(account.lastname);
             setUserEmail(account.userEmail);
             setUserName(account.username);
+            setBalance(account.balance);
         }
     }, [account])
 
     return (
-        <SafeAreaView>
+        <>
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.informationView}>
@@ -152,6 +154,7 @@ const ProfileScreen = ({navigation} : any) => {
                     <WalletCard
                         userFirstName={userFirstName}
                         userLastName={userLastName}
+                        balance={balance}
                         navigation={navigation}
                         showLink
                     />
@@ -207,7 +210,7 @@ const ProfileScreen = ({navigation} : any) => {
                 activeIndex={4}
                 navigation={navigation}
             />
-        </SafeAreaView>
+        </>
     )
 }
 

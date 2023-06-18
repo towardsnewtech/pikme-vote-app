@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     catImage: {
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        width: '100%'
     },
     blurBackground: {
         top: 0,
@@ -44,7 +45,7 @@ const MainLayout = ({
     const { width, height } = useWindowDimensions()
 
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <View style={styles.container}>
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
@@ -59,7 +60,7 @@ const MainLayout = ({
                     {children}
                 </LinearGradient>
             </View>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

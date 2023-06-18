@@ -9,6 +9,9 @@ import Balance from '../../components/withdraw/Balance'
 import DebitCard from '../../components/withdraw/DebitCard'
 import AddCard from '../../components/withdraw/AddCard'
 import DebitCardAdded from '../../components/withdraw/DeditCardAdded'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { setSelectedAccount } from '../../store/slices/auth.slice'
+import { withdrawAmount } from '../../firebase/payment'
 
 const styles = StyleSheet.create({
     buttonView: {
@@ -18,6 +21,9 @@ const styles = StyleSheet.create({
 })
 
 const WithdrawScreen = ({ navigation }: any) => {
+    const { account } = useAppSelector(state => state.auth);
+    const dispatch = useAppDispatch();
+
     const titleList = ["Total account balance", "Choose Payment Method", "Add A Card", "Choose Payment Method"]
     const btnNameList = ["Next", "Next", "Add", "Proceed"]
 
@@ -44,7 +50,7 @@ const WithdrawScreen = ({ navigation }: any) => {
         return curDate.getMonth() + "/" + curDate.getDate();
     }
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (selectedIndex == 1) {
             setSelectedIndex(3)
             return ;
@@ -56,7 +62,15 @@ const WithdrawScreen = ({ navigation }: any) => {
         }
         if (selectedIndex < titleList.length - 1)
             setSelectedIndex(selectedIndex + 1)
-        else navigation.navigate('Profile', { name: "Profile" })
+        else {
+            await withdrawAmount(amount) ;
+            dispatch(setSelectedAccount({
+                ...account,
+                balance: account.balance - amount
+            }))
+
+            navigation.navigate('Profile', { name: "Profile" })
+        }
     }
 
     const handlePrev = () => {
@@ -77,7 +91,7 @@ const WithdrawScreen = ({ navigation }: any) => {
             <Text mt={50} name={titleList[selectedIndex]} />
 
             {selectedIndex == 0 && <Balance 
-                amount={amount} setAmount={setAmount} 
+                balance={account.balance}  amount={amount} setAmount={setAmount} 
             />}
 
             {selectedIndex == 1 && <DebitCard 

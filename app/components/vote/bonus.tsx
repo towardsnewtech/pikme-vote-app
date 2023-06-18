@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image, Dimensions, PanResponder } from 'react-native';
 
 import _Text from '../../shared/components/_Text'
+import SwipeImage from '../../shared/ui/SwipeImage'
+import DisappearingImage from '../../shared/ui/DisappearingImage'
 
 const headerback = require('../../assets/images/vote/header-back.png')
 const star1 = require('../../assets/images/vote/star1.png')
@@ -13,18 +15,61 @@ const bottomImg = require('../../assets/images/vote/bottom-image.png')
 
 const styles = StyleSheet.create({
     container: {
-        width: 370,
-        minHeight: '100%',
+        width: '100%',
+        height: '100%',
         paddingTop: 50,
         alignItems: 'center',
-        paddingRight: 20
     },
 })
 
-const Bonus = () => {
+const Bonus = ({step, setStep}: {step: number, setStep: any}) => {
+    const top1Img = topImg;
+    const bottom1Img = bottomImg;
+
+    const [selected, setSelected] = React.useState(false)
+    const [animationEnded, setAnimationEnded] = React.useState(false)
+    const [disappearImg, setDisappearImg] = React.useState(null);
+
+    const handleSelect = (img: any) => {
+        if (img == top1Img) setDisappearImg(bottom1Img)
+        if (img == bottom1Img) setDisappearImg(top1Img)
+        setSelected(true)
+    }
+
+    const handleAnimationEnded = () => {
+        setTimeout(() => {
+            setStep((step + 1) % 4)
+        }, 2000);
+        setAnimationEnded(true)
+    }
+
+    const [flag, setFlag] = React.useState(0);
+    const [dxChanged, setDXChanged] = React.useState(false);
+
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (e, gesture) => {
+            if (gesture.dy < -100) {
+                setFlag(1);
+            }
+            if (animationEnded == true) {
+                setFlag(0);
+            }
+        },
+        onPanResponderRelease: (e, gesture) => {
+            if (flag == 1 && dxChanged == false) {
+                setStep((step + 1)%4);
+                setFlag(0);
+            }
+            setDXChanged(false);
+        }
+    })
+
     return (
-        <View style={styles.container}>
-            <View style={{position: 'relative'}}>
+        <View style={styles.container}
+            {...panResponder.panHandlers}
+        >
+            <View style={{ position: 'relative' }}>
                 <Image
                     source={star2}
                     style={{ position: 'absolute', bottom: -30, left: 8 }}
@@ -79,32 +124,59 @@ const Bonus = () => {
                 />
 
             </View>
-            <View style={{
+
+            <View style={{ height: 20 }} />
+
+            {/* <View style={{
                 borderRadius: 15,
                 borderWidth: 2,
                 borderColor: '#999',
                 marginTop: 20
-            }}>
-                <Image
-                    style={{
-                        borderRadius: 15
-                    }}
-                    source={topImg}
-                />
-            </View>
-            <View style={{
+            }}> */}
+            {selected && disappearImg == top1Img && <DisappearingImage imagePath={disappearImg} />}
+
+            {(disappearImg == bottom1Img || disappearImg == null) && (!animationEnded ? <SwipeImage
+                isTopSelected={true}
+                imagePath={top1Img}
+                top1Img={top1Img}
+                step={step}
+                setStep={setStep}
+                handleSelect={handleSelect}
+                handleAnimationEnded={handleAnimationEnded}
+            /> : <Image source={top1Img} style={{
+                marginTop: 100,
+                borderRadius: 20,
+                borderWidth: 2,
+                borderColor: '#999'
+            }} />)}
+            {/* </View> */}
+
+            <View style={{ height: 10 }} />
+
+            {/* <View style={{
                 borderRadius: 15,
                 borderWidth: 2,
                 borderColor: '#999',
                 marginTop: 20
-            }}>
-                <Image
-                    style={{
-                        borderRadius: 15
-                    }}
-                    source={bottomImg}
-                />
-            </View>
+            }}> */}
+            {(disappearImg == top1Img || disappearImg == null) &&
+                (!animationEnded ? <SwipeImage
+                    isTopSelected={false}
+                    imagePath={bottom1Img}
+                    top1Img={top1Img}
+                    step={step}
+                    setStep={setStep}
+                    handleSelect={handleSelect}
+                    handleAnimationEnded={handleAnimationEnded}
+                /> : <Image source={bottom1Img} style={{
+                    marginTop: -150,
+                    borderRadius: 20,
+                    borderWidth: 2,
+                    borderColor: '#999'
+                }} />)}
+
+            {selected && disappearImg == bottom1Img && <DisappearingImage imagePath={disappearImg} />}
+            {/* </View> */}
         </View>
     )
 }

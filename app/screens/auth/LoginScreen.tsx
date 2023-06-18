@@ -8,19 +8,23 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator,
+    ScrollView
 } from 'react-native'
 
 import { TextInput } from '@react-native-material/core'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'; 
 import FilledButton from '../../shared/components/FilledButton';
-import { SignInUser } from '../../firebase/auth';
+import { SignInUser, SignInWithGoogle } from '../../firebase/auth';
 import validator from 'validator';
 import { showToastWithGravity } from '../../common/toast';
 import { useDispatch } from 'react-redux';
 import { setSelectedAccount } from '../../store/slices/auth.slice';
 import _Text from '../../shared/components/_Text';
+// import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const googleImage = require("../../assets/images/auth/google.png");
 const appleImage = require("../../assets/images/auth/apple.png");
@@ -91,6 +95,7 @@ const LoginScreen = ({ navigation }: any) => {
     const [visible, setVisible] = React.useState(true);
     const [errorText, setErrorText] = React.useState("");
     const [loading, setLoading] = React.useState(false);
+    const [isGoogleLoading, setIsGoolgeLoading] = React.useState(false);
     const dispatch = useDispatch()
 
     const toggleCheckbox = () => {
@@ -114,12 +119,40 @@ const LoginScreen = ({ navigation }: any) => {
         }
     }
 
+    const handleGoogleSignIn = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const { idToken } = await GoogleSignin.signIn();
+
+            setIsGoolgeLoading(true)
+
+            let res = await SignInWithGoogle(idToken);
+            setIsGoolgeLoading(false);
+            if (res?.success) {
+                dispatch(setSelectedAccount({
+                    ...res.userProfile
+                }))
+                showToastWithGravity("Sign In Successfully")
+                navigation.navigate("Profile", { name: "Profile" }) ;
+            } else {
+                showToastWithGravity(res?.message);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     React.useEffect(() => {
-        setStep(0)
+        setStep(0);
+        GoogleSignin.signOut();
+        GoogleSignin.configure({
+            webClientId: '915138794331-oqtpabbffn4kcq1vkrtj5pgbava7b9ea.apps.googleusercontent.com'
+        })
     }, [])
 
     React.useEffect(() => {
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,24}$/;
+        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9.!@#$%^&*()]{8,24}$/;
         if (!regularExpression.test(userPassword)) {
             setErrorText("Invalid Password")
             return
@@ -140,15 +173,24 @@ const LoginScreen = ({ navigation }: any) => {
     return (
         <MainLayout>
             <WelcomeContainer>
+                {/* <ScrollView> */}
                 {
                     step == 0 && <React.Fragment>
                         <View
                             style={styles.buttonGroup}
                         >
-                            <CircleButton
-                                text={"Continue with Google"}
-                                icon={googleImage}
-                            />
+                            <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={handleGoogleSignIn}>
+                                <CircleButton
+                                    text={"Continue with Google"}
+                                    icon={googleImage}
+                                />
+                            </TouchableOpacity>
+                            {/* <GoogleSigninButton
+                                style={{width: 192, height: 48}}
+                                size={GoogleSigninButton.Size.Wide}
+                                color={GoogleSigninButton.Color.Dark}
+                                onPress={handleGoogleSignIn} 
+                            /> */}
                             <CircleButton
                                 text={"Continue with Apple"}
                                 icon={appleImage}
@@ -244,6 +286,10 @@ const LoginScreen = ({ navigation }: any) => {
                         </View>
                     </>
                 }
+                {isGoogleLoading && <View style={{ backgroundColor: 'rgba(0,0,0,0.7)', borderTopLeftRadius: 30, borderTopRightRadius: 30, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, left: 0 }}>
+                    <ActivityIndicator size={100} color='blue' />
+                </View>}
+                {/* </ScrollView> */}
             </WelcomeContainer>
         </MainLayout>
     )

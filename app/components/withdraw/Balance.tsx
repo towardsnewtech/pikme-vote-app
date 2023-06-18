@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
     }
 })
 
-const Balance = ({amount, setAmount}: any) => {
+const Balance = ({balance, amount, setAmount}: any) => {
 
     return (
         <ScrollView>
             <_Text
-                name='$2,400'
+                name={`$${balance}`}
                 align='center'
                 mt={10}
                 ftsize={24}

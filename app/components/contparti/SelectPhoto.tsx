@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
         width: '100%',
-        height: 250,
+        height: 200,
     },
     blur: {
         top: 0,
@@ -106,10 +106,9 @@ const SelectPhoto = ({ setStep, img, curY, setCurY, pic, setPic }: any) => {
                     setCurY(0) ;
                     return
                 }
-                // console.log(curPic);
                 
-                if(startY + dy + 250 > (curPic == null ? screen.w * img.height / img.width : screen.w)) {
-                    setCurY((curPic == null ? screen.w * img.height / img.width : screen.w) - 250)
+                if(startY + dy + 200 > (curPic == null ? screen.w * img.height / img.width : screen.w)) {
+                    setCurY((curPic == null ? screen.w * img.height / img.width : screen.w) - 200)
                     return
                 }
                 setCurY(startY + dy)
@@ -121,8 +120,8 @@ const SelectPhoto = ({ setStep, img, curY, setCurY, pic, setPic }: any) => {
                     return 
                 }
 
-                if (startY + dy + 250 > (curPic == null ? screen.w * img.height / img.width : screen.w)) {
-                    startY = (curPic == null ? screen.w * img.height / img.width : screen.w) - 250 ;
+                if (startY + dy + 200 > (curPic == null ? screen.w * img.height / img.width : screen.w)) {
+                    startY = (curPic == null ? screen.w * img.height / img.width : screen.w) - 200 ;
                     return
                 }
                 startY += dy
@@ -166,7 +165,7 @@ const SelectPhoto = ({ setStep, img, curY, setCurY, pic, setPic }: any) => {
                     >
                     </Svg>
 
-                    <View ref={imageRef} style={{ top: curY, width: '100%', height: 250 }}>
+                    <View ref={imageRef} style={{ top: curY, width: '100%', height: 200 }}>
                     {
                         pic != null ?
                             <Image source={pic} style={{ width: screen.w, height: screen.w, top: -curY }} />

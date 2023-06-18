@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     header: {
-        marginTop: 50,
+        marginTop: 70,
         marginBottom: 30
     },
     btnBack: {
@@ -33,7 +33,7 @@ const Interest = ({navigation}: any) => {
     }
 
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <LinearGradient
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
@@ -82,7 +82,7 @@ const Interest = ({navigation}: any) => {
                         ))
                     }
                 </View>
-                <View style={{ width: '100%', position: 'absolute', bottom: 20, left: '5%' }}>
+                <View style={{ width: '100%', position: 'absolute', bottom: 50, left: '5%' }}>
                     <FilledButton
                         text='Continue'
                         width='100%'
@@ -90,7 +90,7 @@ const Interest = ({navigation}: any) => {
                     />
                 </View>
             </LinearGradient>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

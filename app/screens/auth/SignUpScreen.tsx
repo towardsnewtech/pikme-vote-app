@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native'
 
 import MainLayout from '../../components/layout/mainLayout';
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     optionView: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10
     },
@@ -97,7 +98,7 @@ const SingUpScreen = ({ navigation }: any) => {
     }
 
     React.useEffect(() => {
-        var regularExpression = /^(?=.*[0-9])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[a-zA-Z0-9!@#$%^&*()]{8,}$/;
+        var regularExpression = /^(?=.*[0-9])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[a-zA-Z0-9.!@#$%^&*()]{8,}$/;
 
         var regularLengthExpression = /^.{8,}$/;
         if (regularLengthExpression.test(userPassword)) {
@@ -106,7 +107,7 @@ const SingUpScreen = ({ navigation }: any) => {
             setLengthCheck(false)
         }
 
-        var regularSpecialExpression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/ ;
+        var regularSpecialExpression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
         if (regularSpecialExpression.test(userPassword)) {
             setSpecialCheck(true)
         } else {
@@ -140,103 +141,105 @@ const SingUpScreen = ({ navigation }: any) => {
     return (
         <MainLayout>
             <SingleContainer>
-                <View>
-                    <Text style={styles.titleLabel}>{titles[step]}</Text>
-                </View>
-                {step == 0 && <View style={{
-                    ...styles.inputView,
-                    paddingTop: 40,
-                    position: 'relative',
-                }}>
-                    <View style={styles.inputComment}>
-                        <_Text
-                            name='Email'
-                        />
+                <ScrollView>
+                    <View>
+                        <Text style={styles.titleLabel}>{titles[step]}</Text>
                     </View>
-                    <TextInput
-                        inputContainerStyle={{
-                            backgroundColor: 'transparent'
-                        }}
-                        inputStyle={{
-                            paddingLeft: 15,
-                            color: 'white'
-                        }}
-                        color='white'
-                        variant='outlined'
-                        onChangeText={onChangeUserEmail}
-                        value={userEmail}
-                        style={styles.input}
-                        placeholder='Write your email'
-                        placeholderTextColor={'white'}
-                    />
-                </View>}
-                {step == 1 && <>
-                    <View style={{
+                    {step == 0 && <View style={{
                         ...styles.inputView,
                         paddingTop: 40,
-                        position: 'relative'
+                        position: 'relative',
                     }}>
                         <View style={styles.inputComment}>
                             <_Text
-                                name='New password'
+                                name='Email'
                             />
                         </View>
                         <TextInput
                             inputContainerStyle={{
-                                backgroundColor: 'transparent',
+                                backgroundColor: 'transparent'
                             }}
                             inputStyle={{
-                                color: 'white',
+                                paddingLeft: 15,
+                                color: 'white'
                             }}
                             color='white'
                             variant='outlined'
-                            onChangeText={onChangeUserPassword}
-                            value={userPassword}
+                            onChangeText={onChangeUserEmail}
+                            value={userEmail}
                             style={styles.input}
-                            secureTextEntry={!visible}
-                            placeholder=''
+                            placeholder='Write your email'
                             placeholderTextColor={'white'}
-                            trailing={<TouchableOpacity
-                                onPress={() => { setVisible(!visible) }}
-                            >
-                                <MaterialCommunityIcons name={visible ? 'eye' : 'eye-off'} color={'white'} size={25} />
-                            </TouchableOpacity>}
                         />
-                    </View>
+                    </View>}
+                    {step == 1 && <>
+                        <View style={{
+                            ...styles.inputView,
+                            paddingTop: 40,
+                            position: 'relative'
+                        }}>
+                            <View style={styles.inputComment}>
+                                <_Text
+                                    name='New password'
+                                />
+                            </View>
+                            <TextInput
+                                inputContainerStyle={{
+                                    backgroundColor: 'transparent',
+                                }}
+                                inputStyle={{
+                                    color: 'white',
+                                }}
+                                color='white'
+                                variant='outlined'
+                                onChangeText={onChangeUserPassword}
+                                value={userPassword}
+                                style={styles.input}
+                                secureTextEntry={!visible}
+                                placeholder=''
+                                placeholderTextColor={'white'}
+                                trailing={<TouchableOpacity
+                                    onPress={() => { setVisible(!visible) }}
+                                >
+                                    <MaterialCommunityIcons name={visible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                                </TouchableOpacity>}
+                            />
+                        </View>
+                        <View>
+                            <View style={styles.optionView}>
+                                <CircleCheckPrefix disable={!lengthCheck} />
+                                <Text style={lengthCheck ? styles.optionLabel : { ...styles.optionLabel, color: '#777' }}>  Password must be 8 charaters long </Text>
+                            </View>
+                            <View style={styles.optionView}>
+                                <CircleCheckPrefix disable={!numberCheck} />
+                                <Text style={numberCheck ? styles.optionLabel : { ...styles.optionLabel, color: '#777' }}>  Password must contain at least a number(0 - 9)</Text>
+                            </View>
+                            <View style={styles.optionView}>
+                                <CircleCheckPrefix disable={!specialCheck} />
+                                <Text style={specialCheck ? styles.optionLabel : { ...styles.optionLabel, color: '#777' }}>  Password must contain a special character(@.#$.!)</Text>
+                            </View>
+                        </View>
+                    </>}
                     <View>
-                        <View style={styles.optionView}>
-                            <CircleCheckPrefix disable={!lengthCheck} />
-                            <Text style={lengthCheck ? styles.optionLabel : {...styles.optionLabel, color: '#777'}}>  Password must be 8 charaters long </Text>
-                        </View>
-                        <View style={styles.optionView}>
-                            <CircleCheckPrefix disable={!numberCheck} />
-                            <Text style={numberCheck ? styles.optionLabel : {...styles.optionLabel, color: '#777'}}>  Password must contain at least a number(0 - 9)</Text>
-                        </View>
-                        <View style={styles.optionView}>
-                            <CircleCheckPrefix disable={!specialCheck} />
-                            <Text style={specialCheck ? styles.optionLabel : {...styles.optionLabel, color: '#777'}}>  Password must contain a special character(@.#$.!)</Text>
-                        </View>
+                        <Text style={styles.errorText}>{errorText}</Text>
                     </View>
-                </>}
-                <View>
-                    <Text style={styles.errorText}>{errorText}</Text>
-                </View>
-                <View style={{
-                    paddingTop: 100
-                }}>
-                    {
-                        step == 0 ?
-                            <FilledButton
-                                disabled={userEmail == "" || errorText !== ""}
-                                text={'Next'} width={'100%'} onPress={userEmail == "" || errorText !== "" ? () => { } : goToNext}
-                            />
-                            :
-                            <FilledButton
-                                disabled={loading || userPassword == "" || errorText !== ""}
-                                text={'Next'} width={'100%'} onPress={loading || userPassword == "" || errorText !== "" ? () => { } : goToNext}
-                            />
-                    }
-                </View>
+                    <View style={{
+                        paddingTop: 100
+                    }}>
+                        {
+                            step == 0 ?
+                                <FilledButton
+                                    disabled={userEmail == "" || errorText !== ""}
+                                    text={'Next'} width={'100%'} onPress={userEmail == "" || errorText !== "" ? () => { } : goToNext}
+                                />
+                                :
+                                <FilledButton
+                                    disabled={loading || userPassword == "" || errorText !== ""}
+                                    text={'Next'} width={'100%'} onPress={loading || userPassword == "" || errorText !== "" ? () => { } : goToNext}
+                                />
+                        }
+                    </View>
+                </ScrollView>
             </SingleContainer>
         </MainLayout>
     )

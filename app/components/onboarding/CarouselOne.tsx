@@ -122,7 +122,7 @@ const CarouselOne = ({
                 </Animated.View>
             </View>
             <LinearGradient 
-                colors={['#2a3e83b8', '#2A3E83']}
+                colors={['#1b202fb8', '#1b202f']}
                 start={{x: 0 , y: 0}}
                 end={{x:0, y:1}}
                 style={styles.linearBackground}

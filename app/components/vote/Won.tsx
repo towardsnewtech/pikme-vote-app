@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#1c2340',
         width: '100%',
-        minHeight: '100%',
+        height: '100%',
         alignItems: 'center',
         position: 'relative'
     },

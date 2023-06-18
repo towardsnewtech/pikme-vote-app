@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         width: '100%',
         position: 'absolute',
         bottom: 0,
-        paddingBottom: 20
+        paddingBottom: 70
     },
     titleLabel: {
         color: 'white',
@@ -123,21 +123,21 @@ const CarouselTwo = () => {
             </View>
             <Animated.View style={{ transform: [ {translateX: translateX} ] }}>
                 <LinearGradient 
-                    colors={['transparent', '#2A3E83']}
+                    colors={['rgba(27,32,47,0.97)', 'rgb(27,32,47)']}
                     start={{x: 0 , y: 0}}
                     end={{x:0, y:1}}
                     style={styles.linearBackground}
                 >
-                    <GraduallyAppearingText type="two">
+                    <GraduallyAppearingText fontSize={24} type="two">
                         Join the Contests with Huge Pool
                     </GraduallyAppearingText>
                     <GraduallyAppearingText
                         type="two"
                         fontSize={18}
-                        color={'rgba(255, 255, 255, 0.4)'}
+                        color={'rgba(255, 255, 255, 0.7)'}
                         fontWeight={'500'}
                     >
-                        Share your photos or buy something awesome.
+                        Share your photos or buy something awesome!
                     </GraduallyAppearingText>
                 </LinearGradient>
             </Animated.View>

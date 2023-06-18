@@ -44,21 +44,19 @@ const CircleButton = ({
 }: ICircleButton) => {
     return (
         <LinearGradient
-            colors={['#FFFFFF', '#BEBEBE' ]}
+            colors={['#FFFFFF', '#BEBEBE']}
             style={styles.borderContainer}
         >
             <LinearGradient
-                colors={['#5C678E', '#071444' ]}
+                colors={['#5C678E', '#071444']}
                 style={styles.circleButtonContainer}
             >
-                <TouchableOpacity>
-                    <View
-                        style={styles.buttonContainer}
-                    >
-                        <Image source={icon} />
-                        <Text style={styles.textcolor}>{text}</Text>
-                    </View>
-                </TouchableOpacity>
+                <View
+                    style={styles.buttonContainer}
+                >
+                    <Image source={icon} />
+                    <Text style={styles.textcolor}>{text}</Text>
+                </View>
             </LinearGradient>
         </LinearGradient>
     )

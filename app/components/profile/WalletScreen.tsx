@@ -16,7 +16,7 @@ const avatar3Image = require("../../assets/images/profile/avatar3.png")
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        minHeight: '100%',
+        height: '100%',
         backgroundColor: '#283563',
         paddingTop: 80,
 

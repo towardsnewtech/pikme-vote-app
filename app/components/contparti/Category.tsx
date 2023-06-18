@@ -36,12 +36,15 @@ const styles = StyleSheet.create({
         height: '100%',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        marginTop: -40
+        marginTop: -40,
+        overflow: 'visible',
+        zIndex: 2
     },
     comment: {
         marginTop: -15,
         alignItems: 'center',
         justifyContent: 'center',
+        overflow: 'visible',
 
         position: 'relative'
     },
@@ -49,7 +52,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 5,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        zIndex: 10
     },
     layout: {
         paddingLeft: 30,
@@ -192,6 +196,9 @@ const Category = ({ navigation }: any) => {
                 <View style={{ position: 'relative' }}>
                     <AntDesign style={styles.iconprev} name="arrowleft" onPress={() => navigation.navigate("Contest", { name: "Contest" })} />
                     <Image
+                        style={{
+                            width: '100%'
+                        }}
                         source={carousel}
                     />
                 </View>
@@ -351,7 +358,7 @@ const Category = ({ navigation }: any) => {
                         style={{ width: '100%', height: '100%', position: 'absolute' }}
                         onPress={() => setNext(0)}
                     >
-                        <Image source={blurImg} />
+                        <Image style={{ width: '100%' }} source={blurImg} />
                         {/* <BlurView
                             blurType="light"
                             blurAmount={20}

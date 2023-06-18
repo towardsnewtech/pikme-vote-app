@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'column',
         alignItems: 'center',
-        minHeight: '100%',
+        height: '100%',
         position: 'relative'
     },
     linearBackground: {
@@ -25,7 +25,7 @@ const VoteLayout = ({
     children
 }: any) => {
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <View style={styles.container}>
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
@@ -36,7 +36,7 @@ const VoteLayout = ({
                     {children}
                 </LinearGradient>
             </View>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

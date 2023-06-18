@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const WalletCard = ({userFirstName, userLastName, children, navigation, showLink}: any) => {
+const WalletCard = ({userFirstName, userLastName, balance, children, navigation, showLink}: any) => {
     return (
         <LinearGradient
             start={{x: 0 , y: 0}}
@@ -95,13 +95,13 @@ const WalletCard = ({userFirstName, userLastName, children, navigation, showLink
             </View>
             <View style={styles.childrenContainer}>
                 <View style={styles.informationView}>
-                    <Text style={styles.nameText}>Pick Me</Text>
+                    <Text style={styles.nameText}>PikMe</Text>
                     <Text style={styles.userNameText}>{userFirstName} {userLastName}</Text>
                 </View>
                 <View style={styles.walletInformationView}>
                     <View>
                         <Text style={styles.balanceText}>Account Balance</Text>
-                        <Text style={styles.valueText}>$2,400</Text>
+                        <Text style={styles.valueText}>${balance}</Text>
                     </View>
                     { showLink && <View style={{
                         alignItems: 'flex-end',

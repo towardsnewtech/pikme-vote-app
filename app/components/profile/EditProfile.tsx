@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         paddingTop: 80,
         paddingBottom: 120,
         paddingLeft: '5%',
-        paddingRight: '5%'
+        paddingRight: '5%',
+        position: 'relative'
     },
     avatarView: {
         position: 'relative',
@@ -49,10 +50,13 @@ const styles = StyleSheet.create({
     input: {
     },
     buttonGroup: {
-        paddingTop: 60,
+        position: 'absolute',
+        bottom: 100,
+        width: '100%',
+        marginLeft: '5%',
         flexDirection: 'row',
         gap: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     inputComment: {
         position: 'absolute',
@@ -99,9 +103,10 @@ const EditProfile = ({ navigation }: any) => {
     }, [account])
 
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <View style={styles.container}>
+        <>
+            <View style={styles.container}>
+                <ScrollView>
+
                     <View style={styles.avatarView}>
                         <Image source={avatarImage} style={{
                             width: 120,
@@ -203,15 +208,15 @@ const EditProfile = ({ navigation }: any) => {
                             placeholderTextColor={'white'}
                         />
                     </View>
-
-                    <View style={styles.buttonGroup}>
-                        <OutlinedButton text={'Cancel'} onPress={() => { navigation.navigate('Profile', { name: 'Profile' }) }} width='45%' />
-                        <FilledButton disabled={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == ""} text={'Save'} onPress={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == "" ? () => { } : handleUpdate} width='45%' />
-                    </View>
+                </ScrollView>
+                <View style={styles.buttonGroup}>
+                    <OutlinedButton text={'Cancel'} onPress={() => { navigation.navigate('Profile', { name: 'Profile' }) }} width='45%' />
+                    <FilledButton disabled={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == ""} text={'Save'} onPress={loading || userFirstName == "" || userLastName == "" || userName == "" || userEmail == "" ? () => { } : handleUpdate} width='45%' />
                 </View>
-            </ScrollView>
+
+            </View>
             <FooterLayout navigation={navigation} />
-        </SafeAreaView>
+        </>
     )
 }
 

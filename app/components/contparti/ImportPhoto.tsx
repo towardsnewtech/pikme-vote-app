@@ -6,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FilledButton from '../../shared/components/FilledButton'
 import _Text from '../../shared/components/_Text'
 import * as ImagePicker from 'react-native-image-picker';
+import { showToastWithGravity } from '../../common/toast';
 
 const pic1 = require('../../assets/images/contparti/upload/pic1.png')
 const pic2 = require('../../assets/images/contparti/upload/pic2.png')
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     body: {
         width: '100%',
         flexDirection: 'row',
+        justifyContent: 'center',
         flexWrap: 'wrap'
     },
     footer: {
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     importphotocontainer: {
         width: '50%',
         paddingTop: 10,
-        paddingRight: 10,
+        paddingRight: 20,
     },
     importphoto: {
         height: '100%',
@@ -85,24 +87,23 @@ const ImportPhoto = ({ setStep, navigation, setImg, img }: any) => {
     const [curBtn, setCurBtn] = React.useState('Library')
 
     const handleImportImgae = async () => {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 200,
-            maxWidth: 200,
-          };
-          
-        ImagePicker.launchImageLibrary({
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 200,
-            maxWidth: 200,
-          }, (response) => {
-            if (response.assets) {
-                setImg(response.assets[0])
-            }
-          });
 
+        try {
+            ImagePicker.launchImageLibrary({
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 200,
+                maxWidth: 200,
+            }, (response) => {
+                if (response.assets) {
+                    if (response.assets[0].fileSize)
+                        setImg(response.assets[0])
+                    else showToastWithGravity("Not Image Format");
+                }
+            });
+        } catch (err) {
+            showToastWithGravity("Not Image Format");
+        }
         // await ImagePicker.launchImageLibrary({
         //     mediaType: 'photo',
         //     includeBase64: false,
@@ -177,7 +178,7 @@ const ImportPhoto = ({ setStep, navigation, setImg, img }: any) => {
             <View style={styles.footer}>
                 <FilledButton
                     disabled={img == ""}
-                    onPress={() => setStep(1)}
+                    onPress={img == "" ? () => {} : () => setStep(1)}
                     width='100%'
                     text='Choose'
                 />

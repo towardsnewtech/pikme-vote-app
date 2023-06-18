@@ -99,7 +99,7 @@ const Card = ({
             </View>
             <View style={styles.childrenContainer}>
                 <View style={styles.informationView}>
-                    <Text style={styles.nameText}>Pick Me</Text>
+                    <Text style={styles.nameText}>PikMe</Text>
                     <Text style={styles.nameText}>VISA</Text>
                 </View>
                 <View style={styles.walletInformationView}>

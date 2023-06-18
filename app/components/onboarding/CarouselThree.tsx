@@ -91,7 +91,7 @@ const CarouselThree = () => {
                 />
             </View>
             <LinearGradient 
-                colors={['transparent', '#2A3E83']}
+                colors={['transparent', '#1b202f']}
                 start={{x: 0 , y: 0}}
                 end={{x:0, y:1}}
                 style={styles.linearBackground}
@@ -100,7 +100,7 @@ const CarouselThree = () => {
                 <GraduallyAppearingText
                     type="three"
                     fontSize={18}
-                    color={'rgba(255, 255, 255, 0.4)'}
+                    color={'rgba(255, 255, 255, 0.7)'}
                     fontWeight={'500'}
                 >Share your photos or buy something awesome.
                 </GraduallyAppearingText>

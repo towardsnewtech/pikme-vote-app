@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'center',
-        minHeight: '100%',
+        height: '100%',
         position: 'relative',
     },
     linearBackground: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     label: {
-        marginTop: 50,
+        marginTop: '10%',
         color: 'white',
         fontSize: 20,
         alignSelf: 'flex-end',
@@ -34,21 +34,23 @@ const OnBoardingLayout = ({
     children
 }: any) => {
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <View style={styles.container}>
 
                     <LinearGradient
-                        colors={['#101E4F', '#2A3E83']}
+                        colors={['#1b202f', '#1b202f']}
                         style={styles.linearBackground}
                     >
                         <Text style={styles.label}>Skip</Text>
                         <ScrollView style={{ width: '100%', maxHeight: '100%' }}>
-                            {children}
+                            <View style={{ alignItems: 'center' }}>
+                                {children}
+                            </View>
                         </ScrollView>
                     </LinearGradient>
 
                 </View>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

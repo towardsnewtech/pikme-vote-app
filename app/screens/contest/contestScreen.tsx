@@ -51,7 +51,7 @@ const ContestScreen = ({navigation}: any) => {
             </View>
             { curBtn == 'All Contests' && <AllContests navigation={navigation} /> }
             { curBtn == 'Participated' && <Participated navigation={navigation} setCurBtn={setCurBtn} /> }
-            { curBtn !== 'All Contests' && <FooterLayout activeIndex={1} navigation={navigation} /> }
+            <FooterLayout activeIndex={1} navigation={navigation} />
         </ContestLayout>
     )
 }

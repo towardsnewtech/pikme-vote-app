@@ -4,7 +4,9 @@ import {
     StyleSheet,
     View,
     Image,
-    Text
+    Text,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -50,39 +52,41 @@ const styles = StyleSheet.create({
 
 const WelcomeContainer = ({
     children
-}: any ) => {
+}: any) => {
     return (
         <LinearGradient
-            start={{x: 0 , y: 0}}
-            end={{x:0, y:1}}
-            colors={['#FFFFFF', '#2A3E83' ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={['#FFFFFF', '#2A3E83']}
             style={styles.borderGradientContainer}
         >
-            <LinearGradient
-                style={styles.backgroundGradientContainer}
-                colors={['#101E4F', '#2A3E83' ]}
-            >
-                <View
-                    style={styles.cameraImageContainer}
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <LinearGradient
+                    style={styles.backgroundGradientContainer}
+                    colors={['#101E4F', '#2A3E83']}
                 >
-                    <Image source={cameraImage}/>
-                </View>
-                <View>
-                    <Text
-                        style={styles.welcomeText}
+                    <View
+                        style={styles.cameraImageContainer}
                     >
-                        Welcome to PickMe!
-                    </Text>
-                </View>
-                <View>
-                    <Text
-                        style={styles.descText}
-                    >
-                        Get paid to share your phoots
-                    </Text>
-                </View>
-                {children}
-            </LinearGradient>
+                        <Image source={cameraImage} />
+                    </View>
+                    <View>
+                        <Text
+                            style={styles.welcomeText}
+                        >
+                            Welcome to PikMe!
+                        </Text>
+                    </View>
+                    <View>
+                        <Text
+                            style={styles.descText}
+                        >
+                            Get paid to share your photos
+                        </Text>
+                    </View>
+                    {children}
+                </LinearGradient>
+            </KeyboardAvoidingView>
         </LinearGradient>
     )
 }

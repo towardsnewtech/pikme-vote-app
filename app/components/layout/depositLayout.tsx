@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'column',
         alignItems: 'center',
-        minHeight: '100%',
+        height: '100%',
         position: 'relative'
     },
     linearBackground: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 })
 const DepositLayout = ({children, handlePrev}: any) => {
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <View style={styles.container}>
                 <LinearGradient
                     start={{ x: 0, y: 0 }}
@@ -37,7 +37,7 @@ const DepositLayout = ({children, handlePrev}: any) => {
                     {children}
                 </LinearGradient>
             </View>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

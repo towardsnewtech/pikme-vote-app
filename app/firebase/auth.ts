@@ -3,7 +3,7 @@ import { app, auth, db, storage } from './config'
 import { ref, uploadBytesResumable } from 'firebase/storage'
 import { setDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
 import { 
-    createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, sendPasswordResetEmail, getAuth, onAuthStateChanged, updatePassword
+    createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, sendPasswordResetEmail, getAuth, onAuthStateChanged, updatePassword, signInWithCredential, GoogleAuthProvider
 } from 'firebase/auth'
 
 import { setSelectedAccount } from '../store/slices/auth.slice' ;
@@ -42,6 +42,32 @@ export const SignInUser = async (userEmail: string, userPassword: string) => {
         let userProfile = await getDoc(doc(db, "Users", credential.user.uid))
 
         return { success: true, userProfile: userProfile.data(), password: userPassword };
+        
+    } catch (err) {
+        if(err) {
+            if(err.toString().indexOf('too-many-requests') >= 0) {
+                return {success: false, message: 'Too Many Requests'} ;
+            }
+            if(err.toString().indexOf('wrong-password') >= 0) {
+                return {success: false, message: 'Wrong Password'};
+            }
+            if(err.toString().indexOf('user-not-found') >= 0) {
+                return {success: false, message: 'User Not Found'};
+            }
+        }
+    }
+}
+
+export const SignInWithGoogle = async (idToken: any) => {
+    try {
+        const credential = await GoogleAuthProvider.credential(idToken);
+        const res = await signInWithCredential(auth, credential);
+        console.log("----> ", res);
+
+        let userProfile = await getDoc(doc(db, "Users", res.user.uid))
+        console.log(userProfile);
+
+        return { success: true, userProfile: userProfile.data() };
         
     } catch (err) {
         if(err) {

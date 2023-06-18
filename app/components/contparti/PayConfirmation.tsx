@@ -9,8 +9,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import _OutLinedButton from '../../shared/components/_OutLinedButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import useScreen from '../../shared/hooks/useScreen';
+import { setSelectedAccount } from '../../store/slices/auth.slice';
+import { withdrawAmount } from '../../firebase/payment';
 
 const carousel = require('../../assets/images/contparti/category/background.png');
 const prize = require('../../assets/images/contparti/payconfirmation/prize.png');
@@ -137,6 +139,7 @@ const styles = StyleSheet.create({
 })
 
 const PayConfirmation = ({ navigation }: any) => {
+    const dispatch = useAppDispatch();
     const { account } = useAppSelector(state => state.auth)
     const { category } = useAppSelector(state => state.vote)
     const { screen } = useScreen() ;
@@ -204,7 +207,7 @@ const PayConfirmation = ({ navigation }: any) => {
                         style={styles.blur}
                         overlayColor={'rgba(0, 0, 0, .1)'}
                     /> */}
-                    <Image source={blurImg} />
+                    <Image style={{ width: '100%' }} source={blurImg} />
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -279,7 +282,15 @@ const PayConfirmation = ({ navigation }: any) => {
                                 </View>
                                 <Image source={prize} />
                             </View>
-                            <TouchableOpacity onPress={finished ? () => navigation.navigate('ContestConfirm', {name: 'ContestConfirm'}) : () => {} }>
+                            <TouchableOpacity onPress={finished ? async () => {
+                                await withdrawAmount(category.entry) ;
+                                dispatch(setSelectedAccount({
+                                    ...account,
+                                    balance: account.balance - category.entry
+                                }))
+
+                                navigation.navigate('ContestConfirm', {name: 'ContestConfirm'}) 
+                            } : () => {} }>
                                 <View style={styles.slide}>
                                     <Animated.View style={[styles.progressBar, { width, backgroundColor: '#2c84d5' }]} />
                                     <Animated.View style={[styles.mainslide, {left: left, backgroundColor: finished ? 'white': '#1c7ad1' }]}>
@@ -309,7 +320,7 @@ const PayConfirmation = ({ navigation }: any) => {
                         style={styles.blur}
                         overlayColor={'rgba(0, 0, 0, .1)'}
                     /> */}
-                    <Image source={blurImg} />
+                    <Image style={{ width: '100%' }} source={blurImg} />
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}

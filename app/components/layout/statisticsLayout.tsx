@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'column',
         alignItems: 'center',
-        minHeight: '100%',
+        height: '100%',
         position: 'relative'
     },
     linearBackground: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 })
 const StatisticsLayout = ({children}: any) => {
     return (
-        <SafeAreaView>
+        // <SafeAreaView>
             <View style={styles.container}>
                 <LinearGradient
                     colors={['#21263b', '#21263b' ]}
@@ -26,7 +26,7 @@ const StatisticsLayout = ({children}: any) => {
                     {children}
                 </LinearGradient>
             </View>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 

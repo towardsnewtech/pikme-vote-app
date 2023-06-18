@@ -1,21 +1,29 @@
 import React, { useState, useRef } from 'react';
 import { View, Image, PanResponder, Animated } from 'react-native';
 
-const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded, top1Img}: any) => {
+const SwipeImage = ({step, setStep, imagePath, handleSelect, handleAnimationEnded, top1Img}: any) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const [originX, setOriginX] = useState(0);
+  const [flag, setFlag] = React.useState(0);
+  const [dxChanged, setDXChanged] = React.useState(false);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: Animated.event(
-      [
-        null,
-        { dx: pan.x, dy: pan.y }
-      ],
-      { useNativeDriver: false }
-    ),
+    onPanResponderMove: (e, gesture) => {
+      if (gesture.dx > 0) {
+        Animated.event([null, { dx: pan.x }], {useNativeDriver: false})(e, gesture);
+        setDXChanged(true);
+      } else if (gesture.dy < -100) {
+        setFlag(1);
+      }
+    },
     onPanResponderRelease: (e, gesture) => {
-      if (gesture.dx > 250) {
+      if (flag == 1 && dxChanged == false) {
+        setStep((step + 1)%4);
+        setFlag(0);
+      }
+      setDXChanged(false);
+      if (gesture.dx > 120) {
         // Perform animation when dragged to the right
         Animated.timing(pan, {
           toValue: { x: 0, y: imagePath == top1Img ? 100 : -150 },
@@ -46,7 +54,7 @@ const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded, top1Img}: an
   return (
     <Animated.View
         style={{
-            transform: [{ translateX: pan.x }, { rotate }, {translateY: pan.y}],
+            transform: [{ translateX: pan.x }, { rotate }, {translateY: pan.y}]
         }}
         {...panResponder.panHandlers}
         onLayout={(event) => {
@@ -57,6 +65,11 @@ const SwipeImage = ({imagePath, handleSelect, handleAnimationEnded, top1Img}: an
     >
         { imagePath && <Image
             source={imagePath}
+            style={step == 3 && {
+              borderRadius: 20,
+              borderWidth: 2,
+              borderColor: '#999'
+            }}
         />}
     </Animated.View>
   );

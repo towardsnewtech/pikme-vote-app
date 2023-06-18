@@ -6,6 +6,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native'
 import { TextInput } from '@react-native-material/core'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -24,7 +25,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#283563',
         paddingTop: 80,
         paddingLeft: '5%',
-        paddingRight: '5%'
+        paddingRight: '5%',
+        position: 'relative'
     },
     titleText: {
         fontSize: 25,
@@ -89,53 +91,18 @@ const ChangePassword = ({ navigation }: any) => {
         <View
             style={styles.container}
         >
-            <View>
-                <Text style={styles.titleText}>Change Password</Text>
-            </View>
-            <View style={{
-                ...styles.inputView,
-                marginTop: 40
-            }}>
-                <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
-                    <_Text
-                        name='Old password'
-                        color='#999'
-                    />
+            <ScrollView>
+
+                <View>
+                    <Text style={styles.titleText}>Change Password</Text>
                 </View>
-                <TextInput
-                    inputContainerStyle={{
-                        backgroundColor: 'transparent',
-                    }}
-                    inputStyle={{
-                        color: 'white',
-                    }}
-                    color='white'
-                    variant='outlined'
-                    onChangeText={onChangeOldPassword}
-                    value={oldPassword}
-                    style={styles.input}
-                    placeholder='Old Password'
-                    placeholderTextColor={'white'}
-                    secureTextEntry={oldPasswordVisible}
-                    trailing={<TouchableOpacity
-                        onPress={() => { setOldPasswordVisible(!oldPasswordVisible) }}
-                    >
-                        <MaterialCommunityIcons name={!oldPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
-                    </TouchableOpacity>}
-                />
-            </View>
-            <View
-                style={{
-                    paddingTop: 30
-                }}
-            >
                 <View style={{
                     ...styles.inputView,
                     marginTop: 40
                 }}>
                     <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
                         <_Text
-                            name='New password'
+                            name='Old password'
                             color='#999'
                         />
                     </View>
@@ -148,55 +115,96 @@ const ChangePassword = ({ navigation }: any) => {
                         }}
                         color='white'
                         variant='outlined'
-                        onChangeText={onChangeNewPassword}
-                        value={newUserPassword}
+                        onChangeText={onChangeOldPassword}
+                        value={oldPassword}
                         style={styles.input}
-                        placeholder='New Password'
+                        placeholder='Old Password'
                         placeholderTextColor={'white'}
-                        secureTextEntry={newPasswordVisible}
+                        secureTextEntry={oldPasswordVisible}
                         trailing={<TouchableOpacity
-                            onPress={() => { setNewPasswordVisible(!newPasswordVisible) }}
+                            onPress={() => { setOldPasswordVisible(!oldPasswordVisible) }}
                         >
-                            <MaterialCommunityIcons name={!newPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                            <MaterialCommunityIcons name={!oldPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
                         </TouchableOpacity>}
                     />
                 </View>
-                <View style={{
-                    ...styles.inputView,
-                    marginTop: 15
-                }}>
-                    <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
-                        <_Text
-                            name='Confirm password'
-                            color='#999'
+                <View
+                    style={{
+                        paddingTop: 30
+                    }}
+                >
+                    <View style={{
+                        ...styles.inputView,
+                        marginTop: 40
+                    }}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='New password'
+                                color='#999'
+                            />
+                        </View>
+                        <TextInput
+                            inputContainerStyle={{
+                                backgroundColor: 'transparent',
+                            }}
+                            inputStyle={{
+                                color: 'white',
+                            }}
+                            color='white'
+                            variant='outlined'
+                            onChangeText={onChangeNewPassword}
+                            value={newUserPassword}
+                            style={styles.input}
+                            placeholder='New Password'
+                            placeholderTextColor={'white'}
+                            secureTextEntry={newPasswordVisible}
+                            trailing={<TouchableOpacity
+                                onPress={() => { setNewPasswordVisible(!newPasswordVisible) }}
+                            >
+                                <MaterialCommunityIcons name={!newPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                            </TouchableOpacity>}
                         />
                     </View>
-                    <TextInput
-                        inputContainerStyle={{
-                            backgroundColor: 'transparent',
-                        }}
-                        inputStyle={{
-                            color: 'white',
-                        }}
-                        color='white'
-                        variant='outlined'
-                        onChangeText={onChangeConfirmNewPassword}
-                        value={confirmNewPassword}
-                        style={styles.input}
-                        placeholder='Confirm Password'
-                        placeholderTextColor={'white'}
-                        secureTextEntry={confirmPasswordVisible}
-                        trailing={<TouchableOpacity
-                            onPress={() => { setConfirmPasswordVisible(!confirmPasswordVisible) }}
-                        >
-                            <MaterialCommunityIcons name={!confirmPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
-                        </TouchableOpacity>}
-                    />
+                    <View style={{
+                        ...styles.inputView,
+                        marginTop: 15
+                    }}>
+                        <View style={{ ...styles.inputComment, backgroundColor: '#283563' }}>
+                            <_Text
+                                name='Confirm password'
+                                color='#999'
+                            />
+                        </View>
+                        <TextInput
+                            inputContainerStyle={{
+                                backgroundColor: 'transparent',
+                            }}
+                            inputStyle={{
+                                color: 'white',
+                            }}
+                            color='white'
+                            variant='outlined'
+                            onChangeText={onChangeConfirmNewPassword}
+                            value={confirmNewPassword}
+                            style={styles.input}
+                            placeholder='Confirm Password'
+                            placeholderTextColor={'white'}
+                            secureTextEntry={confirmPasswordVisible}
+                            trailing={<TouchableOpacity
+                                onPress={() => { setConfirmPasswordVisible(!confirmPasswordVisible) }}
+                            >
+                                <MaterialCommunityIcons name={!confirmPasswordVisible ? 'eye' : 'eye-off'} color={'white'} size={25} />
+                            </TouchableOpacity>}
+                        />
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
             <View
                 style={{
-                    paddingTop: 250
+                    position: 'absolute',
+                    bottom: 50,
+                    width: '100%',
+                    marginLeft: '5%'
                 }}
             >
                 <FilledButton text='save' width={'100%'} onPress={handleChangePassword} />
